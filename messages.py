@@ -12,6 +12,7 @@ ABOUT_SORTIFY = """
              sorts files into categorized folders based on
                            their extensions.
                             Created by Abhi.
+        (LinkedIn : https://www.linkedin.com/in/abhi-saurav-saroya/)
             """
     
 MAIN_MENU = """
