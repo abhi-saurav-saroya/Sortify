@@ -17,7 +17,11 @@ def main():
                 if folder_path == "main":
                     break
                 elif utils.is_path_valid(folder_path):
-                    organizer.organize(folder_path)
+                    if(organizer.organize(folder_path)):
+                        print(messages.SUCCESS_MESSAGE)
+                    else:
+                        print(messages.ERROR_MESSAGE)
+                    break
                 else:
                     print("Invalid path entered.")
 
@@ -28,7 +32,7 @@ def main():
             print(messages.ABOUT_SORTIFY)
 
         elif choice == "4":
-            print("Thank you for using Sortify!")
+            print(messages.GOODBYE_MESSAGE)
             break
 
         else:
