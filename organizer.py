@@ -3,7 +3,7 @@ import shutil
 
 import config
 
-def organize(folder_path: str) -> bool:
+def organize(folder_path: str) -> tuple[bool, dict]:
     files = os.listdir(folder_path)
     
     full_paths = []
@@ -13,6 +13,8 @@ def organize(folder_path: str) -> bool:
             full_paths.append(full_path)
 
     success = True
+    moved_files_info = {}
+
     for full_path in full_paths:
         category = get_category(full_path)
         destination_folder = create_category_folder(folder_path, category)
@@ -23,8 +25,10 @@ def organize(folder_path: str) -> bool:
         if not move_file(full_path, destination_folder):
             success = False
             break
+        else:
+            add_into_moved_files_statistic(moved_files_info, category)
         
-    return success
+    return success, moved_files_info
     
 
 
@@ -60,3 +64,10 @@ def move_file(full_path: str, destination_folder: str) -> bool:
         return True
     except OSError:
         return False
+    
+
+
+def add_into_moved_files_statistic(moved_files_info: dict, category: str):
+    moved_files_info[category] = (
+        moved_files_info.get(category, 0) + 1
+    )
