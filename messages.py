@@ -22,3 +22,23 @@ MAIN MENU:
     3. About
     4. Exit
 """
+
+GOODBYE_MESSAGE = """
+          ================================================
+                   Thank you for using Sortify!
+          ================================================
+"""
+
+SUCCESS_MESSAGE = """
+            ===============================================
+                  Organization completed successfully!
+            ===============================================
+                   You may visit your tidy folder now
+"""
+
+ERROR_MESSAGE = """
+            ===============================================
+                         An error occurred.
+            ===============================================
+              Sortify was unable to organize the folder.
+"""
