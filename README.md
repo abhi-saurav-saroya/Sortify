@@ -16,7 +16,7 @@ The project focuses on **Python fundamentals, file system automation, modular so
 > Note: Sortify is designed as a learning-focused automation project and currently organizes files within a user-specified directory while preserving existing files through automatic duplicate filename handling.
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Language-Python-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python"/>
+  <img src="https://img.shields.io/badge/Language-Python 3.x-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python3.x"/>
 </p>
 
 <p align="center">
@@ -74,7 +74,7 @@ The project focuses on **Python fundamentals, file system automation, modular so
 ## Project Architecture
 
 <p align="center">
-  <img src="assets\dir-structure.png" alt="Project Structure" width="500">
+  <img src="assets\dir-structure.png" alt="Project Structure" width="300">
 </p>
 
 ## Log File Example
