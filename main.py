@@ -19,9 +19,10 @@ def main():
                     success, moved_files_info = organizer.organize(folder_path)
                     if success:
                         print(messages.SUCCESS_MESSAGE)
-                        utils.display_organization_statistics(moved_files_info)
                     else:
                         print(messages.ERROR_MESSAGE)
+                        
+                    utils.display_organization_statistics(moved_files_info)
                     break
                 else:
                     print("Invalid path entered.")
