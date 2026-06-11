@@ -24,7 +24,6 @@ def organize(folder_path: str) -> tuple[bool, dict]:
 
         if not move_file(full_path, destination_folder):
             success = False
-            break
         else:
             add_into_moved_files_statistic(moved_files_info, category)
         
