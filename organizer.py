@@ -1,5 +1,6 @@
 import os
 import shutil
+import time
 
 import config
 
@@ -13,14 +14,21 @@ def organize(folder_path: str) -> tuple[bool, dict]:
             full_paths.append(full_path)
 
     success = True
-    moved_files_info = {}
+    moved_files_info = {
+        "Renamed" : 0
+    }
 
-    for full_path in full_paths:
+    total = len(full_paths)
+    for index, full_path in enumerate(full_paths, start=1):
         category = get_category(full_path)
         destination_folder = create_category_folder(folder_path, category)
         if destination_folder is None:
             success = False
             continue
+
+        filename = os.path.basename(full_path)
+        print(f"[{index}/{total}] Processing {filename}")
+        time.sleep(0.1)
 
         destination_path, rename_occurred = get_unique_destination_path(destination_folder, full_path)
         

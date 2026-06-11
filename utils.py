@@ -6,11 +6,13 @@ def is_path_valid(folder_path: str) -> bool:
 
 def display_supported_extensions() -> None:
     import config
+    import time
 
     supported_extensions = config.FILE_TYPES
     print("\nSupported Extensions:")
 
     for extension, folder in supported_extensions.items():
+        time.sleep(0.1)
         print(f"\t{extension:<10} -> {folder}")
 
 
@@ -20,7 +22,7 @@ def display_organization_statistics(moved_files_info: dict) -> str:
 
     total_moved = 0
     for category, count in moved_files_info.items():
-        
+
         if category == "Renamed":
             continue
 
