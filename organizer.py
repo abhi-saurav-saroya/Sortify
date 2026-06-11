@@ -20,12 +20,15 @@ def organize(folder_path: str) -> tuple[bool, dict]:
         destination_folder = create_category_folder(folder_path, category)
         if destination_folder is None:
             success = False
-            break
+            continue
 
-        if not move_file(full_path, destination_folder):
-            success = False
-        else:
+        destination_path = get_unique_destination_path(destination_folder, full_path)
+        
+        if move_file(full_path, destination_path):
             add_into_moved_files_statistic(moved_files_info, category)
+        else:
+            success = False
+            continue
         
     return success, moved_files_info
     
@@ -57,9 +60,9 @@ def create_category_folder(folder_path: str, category: str) -> str | None:
 
 
 
-def move_file(full_path: str, destination_folder: str) -> bool:
+def move_file(full_path: str, destination_path: str) -> bool:
     try:
-        shutil.move(full_path, destination_folder)
+        shutil.move(full_path, destination_path)
         return True
     except OSError:
         return False
@@ -70,3 +73,36 @@ def add_into_moved_files_statistic(moved_files_info: dict, category: str):
     moved_files_info[category] = (
         moved_files_info.get(category, 0) + 1
     )
+
+
+
+def get_unique_destination_path(destination_folder: str, full_path: str) -> str:
+
+    filename = os.path.basename(full_path)
+
+    destination_path = os.path.join(
+        destination_folder,
+        filename
+    )
+
+    if not os.path.exists(destination_path):
+        return destination_path
+
+    name, extension = os.path.splitext(filename)
+
+    counter = 1
+
+    while True:
+        new_filename = (
+            f"{name}({counter}){extension}"
+        )
+
+        destination_path = os.path.join(
+            destination_folder,
+            new_filename
+        )
+
+        if not os.path.exists(destination_path):
+            return destination_path
+
+        counter += 1
