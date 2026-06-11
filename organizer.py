@@ -1,6 +1,7 @@
 import os
 import shutil
 import time
+import logger
 
 import config
 
@@ -24,6 +25,9 @@ def organize(folder_path: str) -> tuple[bool, dict]:
         destination_folder = create_category_folder(folder_path, category)
         if destination_folder is None:
             success = False
+            logger.log_message(
+                f"Failed to create folder for category {category}"
+            )
             continue
 
         filename = os.path.basename(full_path)
@@ -34,8 +38,14 @@ def organize(folder_path: str) -> tuple[bool, dict]:
         
         if move_file(full_path, destination_path):
             add_into_moved_files_statistic(moved_files_info, category, rename_occurred)
+            logger.log_message(
+                f"Moved {filename} -> {destination_path}"
+            )
         else:
             success = False
+            logger.log_message(
+                f"Failed to move {filename}"
+            )
             continue
         
     return success, moved_files_info
@@ -120,6 +130,9 @@ def get_unique_destination_path(destination_folder: str, full_path: str) -> tupl
         )
 
         if not os.path.exists(destination_path):
+            logger.log_message(
+                f"Renamed {filename} -> {new_filename}"
+            )
             return destination_path, rename_occurred
 
         counter += 1
