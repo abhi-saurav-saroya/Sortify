@@ -20,7 +20,12 @@ def display_organization_statistics(moved_files_info: dict) -> str:
 
     total_moved = 0
     for category, count in moved_files_info.items():
+        
+        if category == "Renamed":
+            continue
+
         total_moved += count
         print(f"\t{category:<15} -> {count}")
 
+    print(f"Total Files Renamed: {moved_files_info['Renamed']}")
     print(f"Total Files Moved: {total_moved}")

@@ -22,10 +22,10 @@ def organize(folder_path: str) -> tuple[bool, dict]:
             success = False
             continue
 
-        destination_path = get_unique_destination_path(destination_folder, full_path)
+        destination_path, rename_occurred = get_unique_destination_path(destination_folder, full_path)
         
         if move_file(full_path, destination_path):
-            add_into_moved_files_statistic(moved_files_info, category)
+            add_into_moved_files_statistic(moved_files_info, category, rename_occurred)
         else:
             success = False
             continue
@@ -69,14 +69,21 @@ def move_file(full_path: str, destination_path: str) -> bool:
     
 
 
-def add_into_moved_files_statistic(moved_files_info: dict, category: str):
+def add_into_moved_files_statistic(moved_files_info: dict, category: str, rename_occurred: bool):
     moved_files_info[category] = (
         moved_files_info.get(category, 0) + 1
     )
 
+    if rename_occurred:
+        moved_files_info["Renamed"] = (
+            moved_files_info.get("Renamed", 0) + 1
+        )
 
 
-def get_unique_destination_path(destination_folder: str, full_path: str) -> str:
+
+def get_unique_destination_path(destination_folder: str, full_path: str) -> tuple[str, bool]:
+
+    rename_occurred = False
 
     filename = os.path.basename(full_path)
 
@@ -86,13 +93,15 @@ def get_unique_destination_path(destination_folder: str, full_path: str) -> str:
     )
 
     if not os.path.exists(destination_path):
-        return destination_path
+        return destination_path, rename_occurred
 
     name, extension = os.path.splitext(filename)
 
     counter = 1
 
     while True:
+        rename_occurred = True
+
         new_filename = (
             f"{name}({counter}){extension}"
         )
@@ -103,6 +112,6 @@ def get_unique_destination_path(destination_folder: str, full_path: str) -> str:
         )
 
         if not os.path.exists(destination_path):
-            return destination_path
+            return destination_path, rename_occurred
 
         counter += 1
